@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>搜索页</title>
+
+<link rel="stylesheet" type="text/css" href="$ecms.getResourceUrl()/ccs/footer.css"/>
+<link href="$ecms.getResourceUrl()/ccs/search.css" rel="stylesheet" type="text/css" />
+<link href="$ecms.getResourceUrl()/ccs/top.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="$ecms.getResourceUrl()/ccs/style.css" media="screen" />
+ 
+<script type="text/javascript" src="$ecms.getResourceUrl()/js/jquery-1.6.1.min.js"></script>
+<SCRIPT>
+	function changeColor(obj){
+			if(obj.style.color=="red"){
+				obj.style.color = "#002B5E";				
+			}else{
+				obj.style.color = "red";
+			}		
+		}
+    function changeUrl() {
+        var url = $("#goToUrl").attr("href");
+        var num = $("#pageNum").val();
+        url = url.replace("search1", "search"+num);
+        $("#goToUrl").attr("href", url);
+    }
+  	function showMenu(divId){
+		$(".MenuDiv").hide();
+		document.getElementById(divId).style.display="block";
+	}
+    function changeKeyword(){
+      	var k2 = $("#k2").val();
+      	$("#k1").val(k2);
+      	$("#searchForm").submit();
+    }
+</SCRIPT>
+</head>
+<body>
+
+<div cmsid="61660278"  class="sk">
+	<!--顶部-->
+	<div cmsid="65460364"  id="top">
+   	#parse("$ecms.getTemplateUrl()/header.vm")
+    </div>
+    <!--顶部结束-->
+    
+    <div cmsid="43823556"  id="book">
+ 		
+        <div cmsid="47531928"  class="search_top">
+        	<span style="float:left;font-family:'微软雅黑';font-size:18px;font-weight:bold;color:#1c3879;padding-left:10px;line-height:36px;">搜索结果</span>
+            <span style="color:#29509b;font-size:12px;line-height:36px;float:right;padding-right:10px;">
+            	当前位置： <a href="$ecms.getString($site,'full_link')">首页</a> <a>></a> <a>搜索结果页</a>
+            </span>
+        </div>
+        <div cmsid="93793861"  class="search_text">
+          	<div cmsid="49512828"  style="width:26px;height:71px;float:left;background:url($ecms.getResourceUrl()/images/search_bg_left.jpg) no-repeat;"></div>
+        	<div cmsid="73789777"  style="width:923px;float:left;height:71px;background:url($ecms.getResourceUrl()/images/search_bg_middle.jpg) repeat-x;">
+        		<div cmsid="15116007"  style="height:27px;margin-left:160px;margin-top:20px;">
+                  <form method="get">
+            	<div cmsid="51453265"  style="float:left;">
+                  
+                  
+                  <input type="text" name="keyword" style="background:url($ecms.getResourceUrl()/images/search_text.jpg) no-repeat;height:27px;width:557px !important;width:555px;;line-height:27px;border:0 none;font-size:12px;padding-left:10px;"  value="${keyword}"/>
+                  
+                 
+                </div>
+                <div cmsid="65231397"  style="float:left;height:27px;width:95px;">
+                	<input type="image" src="$ecms.getResourceUrl()/images/search_button.jpg" style="display:block; border:0 none;_padding-top:1px;" onclick="this.form.submit()"/>
+                </div>
+                </form>
+            	</div>
+            </div>
+            <div cmsid="48280145"  style="width:31px;height:71px;float:right;background:url($ecms.getResourceUrl()/images/search_bg_right.jpg) no-repeat;"></div>
+        </div>
+	
+        <div cmsid="19408665"  class="content_top">
+			查找到关于<span style="color:red">${keyword}</span>的结果共<span style="color:red">$ecms.getInteger($documents,'Total_Count')</span>项
+            
+        </div>
+        <div cmsid="07380861"  class="search_word">
+        	<span style="color:red;">${keyword}</span>  相关信息
+            #set($search_index=0)
+			#foreach( $document in $documents.items ) 
+			#set($search_index=$search_index+1)
+        </div>
+            
+            <div cmsid="88307806"  class="content">
+        	<div cmsid="54141331"  style="font-size:14px;">
+            	<a href="$ecms.getString($document,'full_link')">$ecms.getCutWord($document, 'verify_Title', 50,  '...')</a>
+            </div>
+            <div cmsid="00956969"  style="color:#999;padding:10px 0;">
+            	时间： $ecms.getDate($document,'PUBLISHED')
+            </div>
+            <div cmsid="12210666"  style="line-height:20px;">   
+            	$ecms.getCutWord($document, 'full_content', 300,  '...')
+            </div>
+			#end
+			#if($search_index==0) 
+ 				暂无相关内容
+   			#end
+        </div>
+		
+		#if($ecms.getInteger($pagination,"Page_Count") > 1)
+        <div cmsid="14288108"  class="ecms_pag">
+		<DIV class="ecms_pagination">
+			#set($endIndex=$ecms.getInteger($pagination,"end_Index"))
+			<UL>
+			  <a class="ecms_disablepage" href="$ecms.getString($pagination,"Full_Link",$ecms.getInteger($pagination,"previous_Index"))"><</a>
+			   
+			  #if($ecms.getInteger($pagination,"current_Index")==5 && $endIndex>7&& $endIndex>6 ||($ecms.getInteger($pagination,"current_Index")>5 && $endIndex==8))
+			  <li><a href="$ecms.getString($pagination,"Full_Link",1)">1</a></li>
+              ...
+           	  #end
+			  #if($ecms.getInteger($pagination,"current_Index")>5 && $endIndex>8)
+              <li><a href="$ecms.getString($pagination,"Full_Link",1)">1</a></li>
+              <li><a href="$ecms.getString($pagination,"Full_Link",1)">2</a></li>
+              ...
+              #end
+			  #foreach($page in [$ecms.getInteger($pagination,"Start_Index_On_Show")..$ecms.getInteger($pagination,"End_Index_On_Show")])
+                #if($ecms.getInteger($pagination,"current_Index")==$page)
+                    <li class="ecms_currentpage">$page</li>
+                #else
+                    <li><a class="ecms_pagenav" href="$ecms.getString($pagination,"Full_Link",$page)"><strong>$page</strong></a></li>
+                #end
+				#end
+				#set($num = $ecms.getInteger($pagination,"end_Index"))
+				#set($num = $num+(-4))
+				#if($ecms.getInteger($pagination,"current_Index")<($num) && $endIndex>8)
+					#set($num = $num+(3))
+					...
+					<li><a href="$ecms.getString($pagination,"Full_Link",$num)">$num</a></li>
+					<li><a href="$ecms.getString($pagination,"Full_Link",$endIndex)">$endIndex</a></li>
+				#end
+				#if($ecms.getInteger($pagination,"current_Index")==($num)&& $endIndex>7|| ($endIndex==8 && $ecms.getInteger($pagination,"current_Index")<4))
+					#set($num = $num+(3))
+					...
+					<li><a href="$ecms.getString($pagination,"Full_Link",$endIndex)">$endIndex</a></li>
+				#end
+				<li class="nextpage"><a href="$ecms.getString($pagination,"Full_Link",$ecms.getInteger($pagination,"next_index"))"> ></a>
+				</li>
+			</ul>
+		</DIV>
+		
+		<div cmsid="13877218"  class="ecms_go">跳转：<input type="text" class="ecms_jump_input" id="pageNum" style="height:16px;_margin-top:2px;"/> 页 <span style="cursor:hand;" class="ecms_list_p6" ><a style="cursor:hand" class="list_p6" id="goToUrl" href="$ecms.getString($pagination,"Full_Link",1)" onclick="changeUrl()">GO</a></span>
+		</div>
+		<div cmsid="15490256"  style="clear:both"></div>
+		</div>
+          #end
+ </div>
+	  	<div cmsid="15490256"  style="clear:both"></div>
+    <!--底部-->
+    <div cmsid="58916710"  id="bottom">
+    #parse("$ecms.getTemplateUrl()/footer.vm")
+    </div>
+    <!--底部结束-->
+
+     
+      </div>
+</body>
+</html>

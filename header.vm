@@ -1,0 +1,77 @@
+<script type="text/javascript" src="$ecms.getResourceUrl()/js/jquery-1.6.1.min.js"></script>
+<div cmsid="24499246"  class="top">
+<!--
+<div cmsid="67119584"  class="top1">
+<SPAN class=date>
+  <SCRIPT language=javaScript>
+today = new Date();
+function initArray() {
+ this.length = initArray.arguments.length
+ for ( var i = 0; i < this.length; i++)
+  this[i + 1] = initArray.arguments[i]
+}
+var d = new initArray('星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六');
+var year = (today.getYear() > 1000) ? today.getYear() : today.getYear() + 1900;
+document.write(year, '年', today.getMonth() + 1, '月', today.getDate(), '日 ',
+  d[today.getDay() + 1]);
+</SCRIPT>
+  </SPAN><SPAN class=date><IFRAME style="DISPLAY: inline; MARGIN-BOTTOM: 5px" 
+  height=20 marginHeight=0 src="http://tianqi.xixik.com/cframe/1" frameBorder=0 
+  width=280 allowTransparency marginWidth=0 scrolling=no></IFRAME></SPAN>
+  <span style="float:right; width:200px;line-height:25px;">
+  <ul>
+  <li style="float:left; background:url($ecms.getResourceUrl()/images/top1.jpg) no-repeat 0px 5px; padding-left:20px; _padding-left:20px;"><a href=http://jiaowu.jnxy.edu.cn  title="教务处" rel="sidebar" onclick="javascript:window.external.AddFavorite('http://jiaowu.jnxy.edu.cn', '教务处');return false;">加入收藏</a></li>
+  <li style="float:left; margin-left:10PX;background:url($ecms.getResourceUrl()/images/top2.jpg) no-repeat 0px 5px; padding-left:20px; _padding-left:20px;"><a href=http://jiaowu.jnxy.edu.cn onClick="this.style.behavior='url(#default#homepage)';this.setHomePage('http://jiaowu.jnxy.edu.cn');">设为主页</a>
+
+</li>
+  </ul>
+  </span>
+  </div>
+-->
+<div cmsid="59171209"  class="top2">
+<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0">
+      <param name="movie" value="$ecms.getResourceUrl()/images/focus1.swf">
+      <param name="quality" value="high">
+      <param name="wmode" value="transparent">
+      <!--这里代码可使Flash背景透明 -->
+      <embed src="$ecms.getResourceUrl()/images/focus1.swf" width="985" height="183" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" wmode="transparent"></embed>
+    </object>
+</div>
+
+
+<div cmsid="86513948"  class="top3">
+<ul>
+<li class="periodical_img" onmousemove="this.className='periodical_img_on'" onmouseout="this.className='periodical_img'" ><a href="$ecms.getString($site,'full_link')">网站首页</a></li>
+  #foreach( $topNavigation in $ecms.getTopNavigation(10) )                      
+<li class="periodical_img" onmousemove="this.className='periodical_img_on'" onmouseout="this.className='periodical_img'" ><a href="$ecms.getString($topNavigation,'full_link')">$ecms.getString($topNavigation,'tree_node_name')</a>
+
+#foreach( $topNavigation2 in $ecms.getChildNavigation($topNavigation) )    
+      <div cmsid="56695049"  class="drop_dwon" id="drop" z-index="1000">                                                                
+        <div cmsid="21641645"  onmousemove="this.className='secondnavmousemove'" onmouseout="this.className=''"><a href="$ecms.getString($topNavigation2,'full_link')" style="font-size:12px;">$ecms.getString($topNavigation2,'tree_node_name')</a></div>
+      </div>
+        #end
+
+
+
+</li>
+  #end
+
+  
+</ul>
+</div>
+</div>
+
+<script type="text/javascript" >
+jQuery(document).ready(function(){
+	jQuery(".top3 ul li").hover(
+		function(){
+			jQuery(this).children(".drop_dwon").slideDown(200);
+			jQuery(this).children(".top3 ul li a").attr("id","sss")
+		},
+		function(){
+			jQuery(this).children(".drop_dwon").slideUp(100);
+			jQuery(this).children(".top3 ul li a").attr("id","")
+		}
+	);
+});
+</script>
